@@ -1,0 +1,62 @@
+<style>
+table {
+    border-collapse: collapse;
+    width: 20%;
+}
+
+table thead{
+    background-color: #AABBCC;
+}
+
+table td, th{
+    padding-left: 10px;
+    border-collapse: collapse;
+    border: solid 1px black;
+}
+</style>
+
+#set( $empName = $request.getParameter("empName") )
+#set( $empCode = $request.getParameter("empCode") )
+#set( $department = $request.getParameter("department") )
+#set( $position = $request.getParameter("position") )
+#set( $salary = $request.getParameter("salary") )
+#set( $homeURL = $request.getParameter("homeURL") )
+
+
+<script type="text/javascript">
+function backHome(){
+    var home = "${homeURL}";
+    window.location = home;
+}
+</script>
+
+<h3>Fail to add new employee...</h3>
+</br>
+<b>Employee information</b>
+<table>
+    <colgroup>
+        <col width="60%">
+        <col width="40%">
+    </colgroup>
+    <tr>
+        <td>Employee Code</td>
+        <td>$empCode</td>
+    </tr>
+    <tr>
+        <td>Employee Name</td>
+        <td>$empName</td>
+    </tr>
+    <tr>
+        <td>Department</td>
+        <td>$department</td>
+    </tr>
+    <tr>
+        <td>Position</td>
+        <td>$position</td>
+    </tr>
+    <tr>
+        <td>Salary</td>
+        <td>$salary</td>
+    </tr>
+<table>
+<input type="button" value="Back" onClick="backHome()"/>
