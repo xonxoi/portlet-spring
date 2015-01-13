@@ -1,8 +1,8 @@
 # portlet-spring
 My first portlet using spring framework to perform some basic functions.
 
-#Build
-You can build this project easily by using Maven 3.0 then run:
+# Build
+You can build this project easily by using Maven 3.0 then run: \n
 mvn clean install
 
-war file will be outputed and is able to deploy on sitevision
+War file will be outputed and is able to deploy on sitevision
