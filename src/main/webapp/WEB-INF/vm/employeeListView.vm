@@ -1,0 +1,52 @@
+<style>
+table {
+    border-collapse: collapse;
+    width: 30%;
+}
+
+table thead{
+    background-color: #AABBCC;
+}
+
+table td, th{
+    padding-left: 5px;
+    border-collapse: collapse;
+    border: solid 1px black;
+}
+
+input[type=text]{
+    width: 90%;
+}
+</style>
+<h2>This is Niteco Employee List</h2>
+<form action="$showAddUrl" method="post">
+    <table>
+        <colgroup>
+            <col width="16%">
+            <col width="25%">
+            <col width="23%">
+            <col width="23%">
+            <col width="13%">
+        </colgroup>
+        <thead>
+            <td>Id</td>
+            <td>Employee Name</td>
+            <td>Department</td>
+            <td>Position</td>
+            <td>Salary</td>
+        </thead>
+        <tbody>
+        #foreach( $emp in $lstEmployee )
+            <tr>
+                <td>$emp.employeeId</td>
+                <td>$emp.employeeName</td>
+                <td>$emp.department</td>
+                <td>$emp.position</td>
+                <td>$emp.salary</td>
+            </tr>
+        #end
+        </tbody>
+    </table>
+    <input type="submit" value="Add Employee" />
+</form>
+

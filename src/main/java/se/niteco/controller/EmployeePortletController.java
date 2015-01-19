@@ -5,7 +5,6 @@ import java.util.List;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -20,6 +19,7 @@ import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
 import se.niteco.model.Employee;
 import se.niteco.service.EmployeeService;
+import senselogic.sitevision.api.Utils;
 
 @Controller
 @RequestMapping(value="VIEW")
@@ -30,8 +30,10 @@ public class EmployeePortletController{
 	private EmployeeService service;
 	
 	@RenderMapping
-	public String showEmployee(Model model, RenderRequest request, RenderResponse response){
-	
+	public String showEmployee(Model model, RenderRequest request, RenderResponse response, PortletPreferences pref){
+		
+		Utils util = (Utils) request.getAttribute("sitevision.utils");
+		
 		//Set add url
 		PortletURL showAddUrl = response.createRenderURL();
 		showAddUrl.setParameter("action", "showAdd");
@@ -52,12 +54,13 @@ public class EmployeePortletController{
 		model.addAttribute("name","Niteco");
 		model.addAttribute("lstEmployee", lst);
 		
-		return "employeeList";
+		String mode = pref.getValue("mode", "View");
+		return "employeeList" + mode;
 	}
 	
 	@RenderMapping(params = "action=showAdd")
 	public String showAdd(Model model, RenderRequest request, RenderResponse response){
-		
+	
 		//Set url to model
 		PortletURL registUrl = response.createActionURL();
 		registUrl.setParameter("action", "insertEmployee");
@@ -74,7 +77,7 @@ public class EmployeePortletController{
 	}
 	
 	@ActionMapping(params = "action=insertEmployee")
-	public void doAdd(ActionRequest request, ActionResponse response){
+	public void doAdd(ActionRequest request, ActionResponse response) throws Exception{
 		
 		Employee newEmp = new Employee(request.getParameter("id"), 
 				request.getParameter("name"), 
@@ -88,8 +91,9 @@ public class EmployeePortletController{
 			response.setRenderParameter("errMessage", "Employee Id is duplicated.");
 		}
 		else{
-			response.removePublicRenderParameter("errMessage");
+			response.setRenderParameter("errMessage", "");
 		}
+		
 	}
 	
 	@RenderMapping(params = "action=showEdit")
@@ -128,7 +132,6 @@ public class EmployeePortletController{
 	public void doRemove(ActionRequest request){
 		
 		String id = (String)request.getParameter("id");
-		System.out.println(id);
 		service.removeEmployee(id);
 	}
 }
